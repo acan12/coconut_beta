@@ -18,7 +18,7 @@ import app.beelabs.com.codebase.R;
 import app.beelabs.com.codebase.component.LoadingDialogComponent;
 import app.beelabs.com.codebase.di.IProgress;
 import app.beelabs.com.codebase.di.component.AppComponent;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /**
  * Created by arysuryawan on 8/16/17.
@@ -69,7 +69,7 @@ public class BaseActivity extends AppCompatActivity implements IView, ComponentC
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override
