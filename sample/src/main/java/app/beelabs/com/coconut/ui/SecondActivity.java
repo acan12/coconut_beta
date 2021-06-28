@@ -1,7 +1,7 @@
 package app.beelabs.com.coconut.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import app.beelabs.com.coconut.R;
 import app.beelabs.com.codebase.base.BaseActivity;

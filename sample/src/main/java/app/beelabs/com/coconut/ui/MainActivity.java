@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,18 +16,9 @@ import app.beelabs.com.codebase.base.BaseActivity;
 import app.beelabs.com.codebase.base.BasePresenter;
 import app.beelabs.com.codebase.base.response.BaseResponse;
 import app.beelabs.com.codebase.support.rx.RxTimer;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 
 public class MainActivity extends BaseActivity implements IMainView {
-    @BindView(R.id.demo_image)
-    ImageView demoImage;
-
-//    @BindView(R.id.content1)
-//    TextView content1;
-    @BindView(R.id.content2)
+    TextView content1;
     TextView content2;
 
 
@@ -37,9 +27,12 @@ public class MainActivity extends BaseActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupCoconutContentView(R.id.root);
-        ButterKnife.bind(this);
+        content1 = findViewById(R.id.content1);
+        content2 = findViewById(R.id.content2);
 
         showFragment(new MainFragment(), R.id.container, true);
+
+        findViewById(R.id.loadButton).setOnClickListener(view -> callMultiApi());
     }
 
     private void callMultiApi() {
@@ -57,13 +50,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                 ((ResourcePresenter) BasePresenter.getInstance(MainActivity.this, ResourcePresenter.class)).getProfileRX();
             }
         });
-
-    }
-
-    @OnClick(R.id.loadButton)
-    public void onLoadButton(View view) {
-        callMultiApi();
-
 
     }
 

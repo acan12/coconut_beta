@@ -51,6 +51,45 @@ public class BaseManager {
     protected OkHttpClient getHttpClient(boolean allowUntrustedSSL,
                                          int timeout,
                                          boolean enableLoggingHttp,
+                                         Interceptor[] customInterceptors) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        if (allowUntrustedSSL) {
+            allowUntrustedSSL(httpClient);
+        }
+
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLSv1.2");
+            sc.init(null, null, null);
+            httpClient.sslSocketFactory(new TLS12SocketFactory(sc.getSocketFactory()));
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        httpClient.connectTimeout(timeout, TimeUnit.SECONDS);
+        httpClient.readTimeout(timeout, TimeUnit.SECONDS);
+        httpClient.writeTimeout(timeout, TimeUnit.SECONDS);
+
+        // interceptor logging HTTP request
+        if (enableLoggingHttp) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClient.addInterceptor(logging);
+        }
+
+
+        if (customInterceptors != null) {
+            for (Interceptor interceptor : customInterceptors) {
+                httpClient.addInterceptor(interceptor);
+            }
+        }
+        return httpClient.build();
+    }
+
+    protected OkHttpClient getHttpClient(boolean allowUntrustedSSL,
+                                         int timeout,
+                                         boolean enableLoggingHttp,
                                          final boolean enableEncryptedRSA) {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
