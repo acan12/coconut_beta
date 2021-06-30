@@ -36,7 +36,7 @@ public class SecondFragment extends BaseFragment implements IMainFragmentView {
     }
 
     private void doSecondWay() {
-        ((ResourcePresenter) BasePresenter.getInstance(this, ResourcePresenter.class)).postPhoneNumber("081212341212");
+        ((ResourcePresenter) BasePresenter.getInstance(this, ResourcePresenter.class)).postPhoneNumber("081212341212", getActivity());
     }
 
     @Override

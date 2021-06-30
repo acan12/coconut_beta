@@ -40,8 +40,8 @@ public class ResourcePresenter extends BasePresenter implements ResourceDao.IRes
     }
 
     @Override
-    public void postPhoneNumber(String phone) {
-        new ResourceDao(this).postPhoneNumber(phone)
+    public void postPhoneNumber(String phone, Context context) {
+        new ResourceDao(this).postPhoneNumber(phone, context)
                 .subscribe(new RxObserver<SummaryResponse>(ifv, "Ambil Data Summary...", 10000) {
                     @Override
                     public void onSubscribe(Disposable d) {

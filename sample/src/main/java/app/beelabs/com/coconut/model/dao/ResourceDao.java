@@ -1,5 +1,7 @@
 package app.beelabs.com.coconut.model.dao;
 
+import android.content.Context;
+
 import java.io.File;
 
 import app.beelabs.com.coconut.model.api.Api;
@@ -30,7 +32,7 @@ public class ResourceDao extends BaseDao {
     // definition usecase
     public interface IResourceDao extends IDaoPresenter {
 
-        void postPhoneNumber(String phone);
+        void postPhoneNumber(String phone, Context context);
 
         void getProfileRX();
 
@@ -80,8 +82,8 @@ public class ResourceDao extends BaseDao {
 //        db.saveToRealm()
 //    }
 
-    public Observable<SummaryResponse> postPhoneNumber(String phone) {
-        return Api.doRXTestFin(phone).subscribeOn(Schedulers.io())
+    public Observable<SummaryResponse> postPhoneNumber(String phone, Context context) {
+        return Api.doRXTestFin(phone, context).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

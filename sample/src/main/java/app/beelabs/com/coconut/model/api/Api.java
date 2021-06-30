@@ -2,7 +2,10 @@ package app.beelabs.com.coconut.model.api;
 
 import android.content.Context;
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
+
 import java.io.File;
+import java.security.interfaces.RSAKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +18,11 @@ import app.beelabs.com.coconut.model.api.response.SourceResponse;
 import app.beelabs.com.coconut.model.api.response.SummaryResponse;
 import app.beelabs.com.codebase.base.BaseApi;
 import io.reactivex.Observable;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Callback;
 
 
@@ -36,13 +41,13 @@ public class Api extends BaseApi {
         return map;
     }
 
-
-    synchronized private static ApiService initApiDomain() {
+    synchronized private static ApiService initApiDomain(Context context) {
         return (ApiService) getInstance()
-                .setupApiDomain(IConfig.API_BASE_URL, App.getAppComponent(),
+                .setupApiDomainWithInterceptors(IConfig.API_BASE_URL, App.getAppComponent(),
                         ApiService.class,
                         true,
-                        app.beelabs.com.codebase.IConfig.TIMEOUT_SHORT_INSECOND, BuildConfig.IS_DEBUG, true);
+                        app.beelabs.com.codebase.IConfig.TIMEOUT_SHORT_INSECOND, BuildConfig.IS_DEBUG, new Interceptor[]{
+                                new ChuckerInterceptor(context)});
 
     }
 
@@ -77,12 +82,12 @@ public class Api extends BaseApi {
 
 
     synchronized public static void doApiArticles(Context context, Callback callback) {
-        initApiDomain().callApiArticles("the-next-web", "latest",
+        initApiDomain(context).callApiArticles("the-next-web", "latest",
                 "6d362365d5e245faa1fe3253c83c45ac").enqueue((Callback<ArticleResponse>) callback);
     }
 
-    synchronized public static Observable<SummaryResponse> doRXTestFin(String phone) {
-        return initApiDomain().callApiRXTestFintech(phone);
+    synchronized public static Observable<SummaryResponse> doRXTestFin(String phone, Context context) {
+        return initApiDomain(context).callApiRXTestFintech(phone);
     }
 
 

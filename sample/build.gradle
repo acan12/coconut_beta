@@ -84,6 +84,8 @@ dependencies {
     implementation project(':coconut-code')
 
     implementation 'androidx.annotation:annotation:1.1.0'
+
+    debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
 }
 
 
