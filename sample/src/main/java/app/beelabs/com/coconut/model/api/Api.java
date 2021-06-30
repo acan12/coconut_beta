@@ -5,7 +5,6 @@ import android.content.Context;
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 
 import java.io.File;
-import java.security.interfaces.RSAKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Callback;
 
 
